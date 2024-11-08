@@ -50,14 +50,6 @@
         "documentation": {}
     },
     {
-        "label": "timedelta",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
         "label": "admin",
         "importPath": "django.contrib",
         "description": "django.contrib",
@@ -171,6 +163,14 @@
         "documentation": {}
     },
     {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
         "label": "get_wsgi_application",
         "importPath": "django.core.wsgi",
         "description": "django.core.wsgi",
@@ -211,6 +211,22 @@
         "importPath": "django.utils.timezone",
         "description": "django.utils.timezone",
         "detail": "django.utils.timezone",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
         "documentation": {}
     },
     {
@@ -608,6 +624,14 @@
         "documentation": {}
     },
     {
+        "label": "Count",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
@@ -977,6 +1001,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "users.migrations.0008_alter_otp_expires_at_likedblogs",
+        "description": "users.migrations.0008_alter_otp_expires_at_likedblogs",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0007_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(),\n        ),",
+        "detail": "users.migrations.0008_alter_otp_expires_at_likedblogs",
+        "documentation": {}
+    },
+    {
         "label": "UsersConfig",
         "kind": 6,
         "importPath": "users.apps",
@@ -1031,11 +1064,20 @@
         "documentation": {}
     },
     {
+        "label": "LikedBlogs",
+        "kind": 6,
+        "importPath": "users.models",
+        "description": "users.models",
+        "peekOfCode": "class LikedBlogs(models.Model):\n    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)\n    blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)\n    class Meta:\n        constraints = [\n            models.UniqueConstraint(fields=['user', 'blogpost'], name='unique_user_blogpost_like')\n        ]\n    def __str__(self):\n        return f\"User {self.user} liked BlogPost {self.blogpost.id}\"",
+        "detail": "users.models",
+        "documentation": {}
+    },
+    {
         "label": "BlogPostSerializer",
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted']\n        read_only_fields = ['author']\n    def create(self, validated_data):\n        print(\"Initial data:\", self.initial_data)  # Debug print\n        print(\"Validated data:\", validated_data)  # Debug print\n        print(validated_data)\n        return BlogPost.objects.create(author=self.context['request'].user, **validated_data)",
+        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.IntegerField(read_only=True)  # Add this field to include the number of likes\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count']\n        read_only_fields = ['author']\n    def create(self, validated_data):\n        print(\"Initial data:\", self.initial_data)  # Debug print\n        print(\"Validated data:\", validated_data)  # Debug print\n        return BlogPost.objects.create(author=self.context['request'].user, **validated_data)",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -1044,7 +1086,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class MediaSerializer(serializers.ModelSerializer):\n    image_url = serializers.SerializerMethodField()\n    class Meta:\n        model = Media\n        fields = ['id', 'image', 'created_at', 'image_url']\n    def get_image_url(self, obj):\n        return obj.image_url      \nclass UserSerializer(serializers.ModelSerializer):\n    blog_posts = BlogPostSerializer(many=True, read_only=True)  \n    class Meta:",
+        "peekOfCode": "class MediaSerializer(serializers.ModelSerializer):\n    image_url = serializers.SerializerMethodField()\n    class Meta:\n        model = Media\n        fields = ['id', 'image', 'created_at', 'image_url']\n    def get_image_url(self, obj):\n        return obj.image_url      \nclass UserSerializer(serializers.ModelSerializer):\n    # blog_posts = BlogPostSerializer(many=True, read_only=True)  \n    class Meta:",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -1053,7 +1095,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    blog_posts = BlogPostSerializer(many=True, read_only=True)  \n    class Meta:\n        model = User\n        fields = ['id', 'name', 'email', 'password', 'blog_posts'] \n        extra_kwargs = {\n            'password': {'write_only': True},\n        }\n    def __init__(self, *args, **kwargs):\n        request = kwargs.get('context', {}).get('request', None)",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    # blog_posts = BlogPostSerializer(many=True, read_only=True)  \n    class Meta:\n        model = User\n        fields = ['id', 'name', 'email', 'password'] \n        extra_kwargs = {\n            'password': {'write_only': True},\n        }\n    def __init__(self, *args, **kwargs):\n        request = kwargs.get('context', {}).get('request', None)",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -1134,7 +1176,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostListView(generics.ListCreateAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    def get_permissions(self):\n        if self.request.method == 'GET':\n            return [permissions.AllowAny()]\n        return [permissions.IsAuthenticated()] \n    def perform_create(self, serializer):\n        serializer.save()\nclass BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):",
+        "peekOfCode": "class BlogPostListView(generics.ListCreateAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    def get_permissions(self):\n        if self.request.method == 'GET':\n            return [permissions.AllowAny()]\n        return [permissions.IsAuthenticated()] \n    def get_queryset(self):\n        # Annotate the queryset with the count of likes\n        return BlogPost.objects.annotate(",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1206,16 +1248,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class MediaUploadView(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def post(self, request, *args, **kwargs):\n        serializer = MediaSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\nclass MediaListView(ListAPIView):",
-        "detail": "users.views",
-        "documentation": {}
-    },
-    {
-        "label": "MediaListView",
-        "kind": 6,
-        "importPath": "users.views",
-        "description": "users.views",
-        "peekOfCode": "class MediaListView(ListAPIView):\n    queryset = Media.objects.all()\n    serializer_class = MediaSerializer    \nclass MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user, is_deleted=False)",
+        "peekOfCode": "class MediaUploadView(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def post(self, request, *args, **kwargs):\n        serializer = MediaSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\nclass MyPostsView(generics.ListAPIView):",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1224,7 +1257,16 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user, is_deleted=False)",
+        "peekOfCode": "class MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user)        \nclass LikeBlogsView(APIView):\n    permission_classes = [IsAuthenticated]\n    def post(self, request, *args, **kwargs):",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "LikeBlogsView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class LikeBlogsView(APIView):\n    permission_classes = [IsAuthenticated]\n    def post(self, request, *args, **kwargs):\n        blogpost_id = request.data.get('blogpost_id')\n        if not blogpost_id:\n            return Response({\"message\": \"Blog post ID is required.\"}, status=status.HTTP_400_BAD_REQUEST)\n        try:\n            blogpost = BlogPost.objects.get(id=blogpost_id)\n        except BlogPost.DoesNotExist:\n            return Response({\"message\": \"Blog post not found.\"}, status=status.HTTP_404_NOT_FOUND)",
         "detail": "users.views",
         "documentation": {}
     },

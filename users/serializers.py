@@ -3,37 +3,20 @@ from rest_framework import serializers
 from auth.settings import BASE_URL
 from .models import BlogPost, User, OTP, Media
 
-# class UserSerializer(serializers.ModelSerializer):
-     
-#     class Meta:
-#         model = User
-#         fields = ['id', 'name', 'email', 'password']
-#         extra_kwargs = {
-#             'password': {'write_only': True}
-#         }
-        
-#     def create(self, validated_data):
-#         password = validated_data.pop('password', None) 
-#         if password is None or password == '':
-#             raise serializers.ValidationError({"password": "Password is required."})
-
-#         instance = self.Meta.model(**validated_data)
-#         instance.set_password(password) 
-#         instance.save()       
-#         return instance
-
 class BlogPostSerializer(serializers.ModelSerializer):
+    likes_count = serializers.IntegerField(read_only=True)  # Add this field to include the number of likes
+
     class Meta:
         model = BlogPost
-        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted']
+        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count']
         read_only_fields = ['author']
-        
+
     def create(self, validated_data):
         print("Initial data:", self.initial_data)  # Debug print
         print("Validated data:", validated_data)  # Debug print
-        print(validated_data)
         return BlogPost.objects.create(author=self.context['request'].user, **validated_data)
-
+    
+    
 
 class MediaSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
@@ -46,11 +29,11 @@ class MediaSerializer(serializers.ModelSerializer):
         return obj.image_url      
         
 class UserSerializer(serializers.ModelSerializer):
-    blog_posts = BlogPostSerializer(many=True, read_only=True)  
+    # blog_posts = BlogPostSerializer(many=True, read_only=True)  
 
     class Meta:
         model = User
-        fields = ['id', 'name', 'email', 'password', 'blog_posts'] 
+        fields = ['id', 'name', 'email', 'password'] 
         extra_kwargs = {
             'password': {'write_only': True},
         }

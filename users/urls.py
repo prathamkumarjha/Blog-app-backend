@@ -1,7 +1,7 @@
 from django.urls import path
 from auth.settings import MEDIA_ROOT
-from .views import RegisterView, LoginView, UserView 
-from .views import BlogPostListView, BlogPostDetailView, ActivateAccount, ChangePassword, ForgotPasswordView, OTPVerificationView, PasswordResetView, MediaUploadView, MediaListView, MyPostsView
+from .views import LikeBlogsView, LoginView, RegisterView, UserView
+from .views import BlogPostListView, BlogPostDetailView, ActivateAccount, ChangePassword, ForgotPasswordView, OTPVerificationView, PasswordResetView, MediaUploadView, MyPostsView
 # from rest_framework_simplejwt.views import (
 #     TokenObtainPairView,
 #     TokenRefreshView,
@@ -24,8 +24,7 @@ urlpatterns = [
     path('web/posts/', BlogPostListView.as_view(), name='web-post-list'),  #list all the published posts and also can create a new post if the user is authenticated 
     path('web/myposts',MyPostsView.as_view(), name='my-post-list'), #list all the user posts
     path('web/posts/<int:pk>/', BlogPostDetailView.as_view(), name='post-detail'), #get the specific post  and also can update the new post if the user is authenticated
-    path('images/', MediaListView.as_view(), name='media-list'),    #to remove 
-
+    path('web/posts/reactions',LikeBlogsView.as_view(), name='liked-posts'),   #Like and dislike a post
     
     #Admin Posts
     #Auth

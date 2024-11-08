@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from rest_framework.permissions import IsAuthenticated
 from users.serializers import BlogPostSerializer, ForgotPasswordSerializer, UserSerializer, ForgotPasswordSerializer, PasswordResetSerializer, OTPVerificationSerializer, MediaSerializer
-from .models import User, BlogPost, OTP
+from .models import User, BlogPost, OTP, LikedBlogs
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
@@ -19,7 +19,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Media
 from rest_framework.generics import ListAPIView
-
+from django.db.models import Count
 
 class RegisterView(APIView):
     def post(self, request):
@@ -80,7 +80,11 @@ class BlogPostListView(generics.ListCreateAPIView):
         if self.request.method == 'GET':
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()] 
-
+    def get_queryset(self):
+        # Annotate the queryset with the count of likes
+        return BlogPost.objects.annotate(
+            likes_count=Count('likedblogs')
+        ).filter(is_deleted=False)
     def perform_create(self, serializer):
         serializer.save()
 
@@ -100,14 +104,20 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         # Only allow the author to update the post
         serializer.save(author=self.request.user)
+        return Response({'message':'Post Updated'})
   
     def perform_destroy(self, instance):
         if instance.author != self.request.user:
             raise PermissionDenied("You do not have permission to delete this post.")
-    
-        instance.is_deleted = True
-        instance.deleted_at = timezone.now()
-        instance.save()
+            
+        if instance.is_deleted:
+          instance.delete() 
+          return Response({'message':'Post deleted permanently'}) 
+        else:  
+            instance.is_deleted = True
+            instance.deleted_at = timezone.now()
+            instance.save()
+            return Response({'message':'Post moved to trash'})
         
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
@@ -251,9 +261,7 @@ class MediaUploadView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class MediaListView(ListAPIView):
-    queryset = Media.objects.all()
-    serializer_class = MediaSerializer    
+  
     
 class MyPostsView(generics.ListAPIView):
     serializer_class = BlogPostSerializer
@@ -262,4 +270,28 @@ class MyPostsView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return BlogPost.objects.filter(author=user, is_deleted=False)        
+        return BlogPost.objects.filter(author=user)        
+    
+    
+class LikeBlogsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        blogpost_id = request.data.get('blogpost_id')
+
+        if not blogpost_id:
+            return Response({"message": "Blog post ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            blogpost = BlogPost.objects.get(id=blogpost_id)
+        except BlogPost.DoesNotExist:
+            return Response({"message": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)
+        user = request.user
+        existingLike = LikedBlogs.objects.filter(user=user,blogpost=blogpost).first()
+        if existingLike:
+            existingLike.delete()
+            return Response({"message":"Blog post unliked soccessfully"}, status=status.HTTP_200_OK)
+        else:
+            LikedBlogs.objects.create(user=user, blogpost=blogpost)    
+            return Response({"message":"Blog post liked successfully"}, status = status.HTTP_201_CREATED)
+           
