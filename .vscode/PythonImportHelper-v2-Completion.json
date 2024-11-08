@@ -671,7 +671,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = os.getenv('SECRET_KEY')\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = os.getenv('DEBUG') == 'True'\nALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com']\n# Application definition\nINSTALLED_APPS = [",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/\nload_dotenv()\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = os.getenv('SECRET_KEY')\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = os.getenv('DEBUG') == 'True'\nALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com','localhost']\n# Application definition",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -680,7 +680,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "SECRET_KEY = os.getenv('SECRET_KEY')\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = os.getenv('DEBUG') == 'True'\nALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
+        "peekOfCode": "SECRET_KEY = os.getenv('SECRET_KEY')\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = os.getenv('DEBUG') == 'True'\nALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com','localhost']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -689,7 +689,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "DEBUG = os.getenv('DEBUG') == 'True'\nALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
+        "peekOfCode": "DEBUG = os.getenv('DEBUG') == 'True'\nALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com','localhost']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -698,7 +698,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "ALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework', ",
+        "peekOfCode": "ALLOWED_HOSTS = ['blog-app-backend-jbko.onrender.com','localhost']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework', ",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -851,7 +851,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [",
+        "peekOfCode": "EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -860,7 +860,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct",
+        "peekOfCode": "EMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -869,7 +869,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "EMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -878,7 +878,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "EMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -887,7 +887,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -896,7 +896,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -905,7 +905,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "BASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "BASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -914,7 +914,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -923,7 +923,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -932,7 +932,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "CORS_ALLOWED_ORIGINS = [\n    'https://blog-app-backend-jbko.onrender.com',  # Correct\n]",
+        "peekOfCode": "CORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
