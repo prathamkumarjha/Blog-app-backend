@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
+# Import dj-database-url at the beginning of the file.
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h!br#cquo40rg&a^0q%f2=nf_kr+0^$)yadjyr7wj@&xg-fwg9'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -79,15 +82,21 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blogs',
-        'USER': 'root',
-        'PASSWORD': 'pratham'
-    }
-}
 
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'blogs',
+#         'USER': 'root',
+#         'PASSWORD': 'pratham'
+#     }
+# }
+
+# Database
+DATABASES = {
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -150,12 +159,13 @@ REST_FRAMEWORK = {
 
 
 
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email
-EMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 BASE_URL = 'http://localhost:8000/' 
 MEDIA_URL = '/media/'
