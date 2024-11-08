@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, PermissionDenied
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.core.mail import send_mail
@@ -10,15 +10,15 @@ from django.conf import settings
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from rest_framework.permissions import IsAuthenticated
-from users.serializers import BlogPostSerializer, ForgotPasswordSerializer, UserSerializer, ForgotPasswordSerializer, PasswordResetSerializer, OTPVerificationSerializer
+from users.serializers import BlogPostSerializer, ForgotPasswordSerializer, UserSerializer, ForgotPasswordSerializer, PasswordResetSerializer, OTPVerificationSerializer, MediaSerializer
 from .models import User, BlogPost, OTP
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.utils import timezone
 from datetime import timedelta
-
-# class mu
+from .models import Media
+from rest_framework.generics import ListAPIView
 
 
 class RegisterView(APIView):
@@ -66,7 +66,7 @@ class LoginView(APIView):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
-            'user': serializer.data,
+            "message": "logged in successfully"
         })
 
 
@@ -87,38 +87,50 @@ class BlogPostListView(generics.ListCreateAPIView):
 class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = BlogPost.objects.filter(is_deleted=False)
     serializer_class = BlogPostSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def perform_update(self, serializer):
-        serializer.save(author=self.request.user)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
     def get_object(self):
         obj = super().get_object()
-        if obj.author != self.request.user:
-            raise permissions.PermissionDenied("You do not have permission to edit this blog post.")
+        # Restrict edit permissions to only the author
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            if obj.author != self.request.user:
+                raise permissions.PermissionDenied("You do not have permission to edit this blog post.")
         return obj
 
+    def perform_update(self, serializer):
+        # Only allow the author to update the post
+        serializer.save(author=self.request.user)
+  
+    def perform_destroy(self, instance):
+        if instance.author != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this post.")
+    
+        instance.is_deleted = True
+        instance.deleted_at = timezone.now()
+        instance.save()
+        
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
+        # Get the user object for the authenticated user
         user = request.user
-        serializer = UserSerializer(user) 
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
-class BlogPostDeleteView(generics.DestroyAPIView):
-    queryset = BlogPost.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
 
-    def delete(self, request, *args, **kwargs):
-        post = self.get_object()  
-        if request.query_params.get('hard_delete', False):
-            post.hard_delete() 
-        else:
-            post.soft_delete()  
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
+    def patch(self, request):
+        # Update the user information with the data from the request
+        user = request.user
+
+        # Validate and update fields. Assuming the serializer handles validation.
+        serializer = UserSerializer(user, data=request.data, partial=True)  # Use partial=True for partial update
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=400) 
+        
    
 class ActivateAccount(APIView):
     def get(self, request, uidb64, token):
@@ -156,9 +168,6 @@ class ChangePassword(APIView):
 
         return Response({"message": "Password changed successfully."}, status=status.HTTP_200_OK)
 
-# class ForgotPassword:
-#     def post(self, request):
-
 class ForgotPasswordView(APIView):
     def post(self, request):
         serializer = ForgotPasswordSerializer(data=request.data)
@@ -169,7 +178,7 @@ class ForgotPasswordView(APIView):
             OTP.objects.filter(user=user).delete()
             otp = OTP(user=user)
             otp.otp = otp.generate_otp()
-            otp.expires_at = (timezone.now() + timedelta(minutes=10))  # OTP expires in 10 minutes
+            otp.expires_At = (timezone.now() + timedelta(minutes=10))  # OTP expires in 10 minutes
             print(timezone.now())
           
             otp.save()
@@ -230,3 +239,27 @@ class PasswordResetView(APIView):
         except Exception:
             return None
 
+
+class MediaUploadView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request, *args, **kwargs):
+        serializer = MediaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class MediaListView(ListAPIView):
+    queryset = Media.objects.all()
+    serializer_class = MediaSerializer    
+    
+class MyPostsView(generics.ListAPIView):
+    serializer_class = BlogPostSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        user = self.request.user
+        return BlogPost.objects.filter(author=user, is_deleted=False)        

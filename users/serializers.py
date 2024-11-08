@@ -1,5 +1,7 @@
+import django.conf
 from rest_framework import serializers
-from .models import BlogPost, User, OTP
+from auth.settings import BASE_URL
+from .models import BlogPost, User, OTP, Media
 
 # class UserSerializer(serializers.ModelSerializer):
      
@@ -33,23 +35,32 @@ class BlogPostSerializer(serializers.ModelSerializer):
         return BlogPost.objects.create(author=self.context['request'].user, **validated_data)
 
 
+class MediaSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Media
+        fields = ['id', 'image', 'created_at', 'image_url']
+
+    def get_image_url(self, obj):
+        return obj.image_url      
+        
 class UserSerializer(serializers.ModelSerializer):
-    blog_posts = BlogPostSerializer(many=True, read_only=True)  # Add blog posts to the user serializer
+    blog_posts = BlogPostSerializer(many=True, read_only=True)  
 
     class Meta:
         model = User
-        fields = ['id', 'name', 'email', 'password', 'blog_posts']  # Include 'blog_posts' in the fields
+        fields = ['id', 'name', 'email', 'password', 'blog_posts'] 
         extra_kwargs = {
             'password': {'write_only': True},
         }
 
     def __init__(self, *args, **kwargs):
-        # Check if the context contains the request and the view name
+        
         request = kwargs.get('context', {}).get('request', None)
         if request and hasattr(request, 'view'):
             view = request.view
-            # If we are in the register view, exclude the 'blog_posts' field
+            
             if view and view.action == 'register':
                 self.fields.pop('blog_posts')
         super().__init__(*args, **kwargs)
@@ -70,7 +81,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         try:
-            user =User.objects.get(email=value)
+            user = User.objects.get(email=value)
         except User.DoesNotExist:
             raise serializers.ValidationError("No user is associated with this email address.")
         return value

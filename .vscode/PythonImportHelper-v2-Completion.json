@@ -122,6 +122,55 @@
         "documentation": {}
     },
     {
+        "label": "static",
+        "importPath": "django.conf.urls.static",
+        "description": "django.conf.urls.static",
+        "isExtraImport": true,
+        "detail": "django.conf.urls.static",
+        "documentation": {}
+    },
+    {
+        "label": "django.conf",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
         "label": "get_wsgi_application",
         "importPath": "django.core.wsgi",
         "description": "django.core.wsgi",
@@ -165,19 +214,35 @@
         "documentation": {}
     },
     {
-        "label": "settings",
-        "importPath": "django.conf",
-        "description": "django.conf",
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
         "isExtraImport": true,
-        "detail": "django.conf",
+        "detail": "django.db",
         "documentation": {}
     },
     {
-        "label": "settings",
-        "importPath": "django.conf",
-        "description": "django.conf",
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
         "isExtraImport": true,
-        "detail": "django.conf",
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
         "documentation": {}
     },
     {
@@ -351,6 +416,22 @@
         "documentation": {}
     },
     {
+        "label": "BASE_URL",
+        "importPath": "auth.settings",
+        "description": "auth.settings",
+        "isExtraImport": true,
+        "detail": "auth.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_ROOT",
+        "importPath": "auth.settings",
+        "description": "auth.settings",
+        "isExtraImport": true,
+        "detail": "auth.settings",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -384,6 +465,14 @@
     },
     {
         "label": "AuthenticationFailed",
+        "importPath": "rest_framework.exceptions",
+        "description": "rest_framework.exceptions",
+        "isExtraImport": true,
+        "detail": "rest_framework.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "PermissionDenied",
         "importPath": "rest_framework.exceptions",
         "description": "rest_framework.exceptions",
         "isExtraImport": true,
@@ -503,6 +592,22 @@
         "documentation": {}
     },
     {
+        "label": "MediaSerializer",
+        "importPath": "users.serializers",
+        "description": "users.serializers",
+        "isExtraImport": true,
+        "detail": "users.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "ListAPIView",
+        "importPath": "rest_framework.generics",
+        "description": "rest_framework.generics",
+        "isExtraImport": true,
+        "detail": "rest_framework.generics",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
@@ -561,7 +666,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework', \n    'users'\n]",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework', \n    'users',\n    'corsheaders',",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -570,7 +675,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\nROOT_URLCONF = 'auth.urls'",
+        "peekOfCode": "MIDDLEWARE = [\n    'corsheaders.middleware.CorsMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -705,7 +810,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password",
+        "peekOfCode": "EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -714,7 +819,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password",
+        "peekOfCode": "EMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -723,7 +828,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password",
+        "peekOfCode": "EMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -732,7 +837,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password",
+        "peekOfCode": "EMAIL_USE_TLS = True\nEMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -741,7 +846,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password",
+        "peekOfCode": "EMAIL_HOST_USER = 'prathamkumarjha625@gmail.com'   # Replace with your email\nEMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -750,7 +855,43 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password",
+        "peekOfCode": "EMAIL_HOST_PASSWORD = 'xhhr svro kilb cqpq'      # Replace with your email password\nBASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
+        "detail": "auth.settings",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_URL",
+        "kind": 5,
+        "importPath": "auth.settings",
+        "description": "auth.settings",
+        "peekOfCode": "BASE_URL = 'http://localhost:8000/' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
+        "detail": "auth.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_URL",
+        "kind": 5,
+        "importPath": "auth.settings",
+        "description": "auth.settings",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
+        "detail": "auth.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_ROOT",
+        "kind": 5,
+        "importPath": "auth.settings",
+        "description": "auth.settings",
+        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
+        "detail": "auth.settings",
+        "documentation": {}
+    },
+    {
+        "label": "CORS_ALLOWED_ORIGINS",
+        "kind": 5,
+        "importPath": "auth.settings",
+        "description": "auth.settings",
+        "peekOfCode": "CORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -759,7 +900,7 @@
         "kind": 5,
         "importPath": "auth.urls",
         "description": "auth.urls",
-        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('api/', include('users.urls')),\n    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),\n    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('api/', include('users.urls')),\n    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),\n    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),\n]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
         "detail": "auth.urls",
         "documentation": {}
     },
@@ -818,6 +959,24 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "users.migrations.0006_media_alter_otp_expires_at",
+        "description": "users.migrations.0006_media_alter_otp_expires_at",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0005_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Media',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('image', models.ImageField(upload_to='media/')),",
+        "detail": "users.migrations.0006_media_alter_otp_expires_at",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "users.migrations.0007_alter_otp_expires_at",
+        "description": "users.migrations.0007_alter_otp_expires_at",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0006_media_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(default=datetime.datetime(2024, 11, 7, 11, 59, 14, 472854, tzinfo=datetime.timezone.utc)),\n        ),",
+        "detail": "users.migrations.0007_alter_otp_expires_at",
+        "documentation": {}
+    },
+    {
         "label": "UsersConfig",
         "kind": 6,
         "importPath": "users.apps",
@@ -854,11 +1013,20 @@
         "documentation": {}
     },
     {
+        "label": "Media",
+        "kind": 6,
+        "importPath": "users.models",
+        "description": "users.models",
+        "peekOfCode": "class Media(models.Model):\n    image = models.ImageField(upload_to='media/')\n    created_at = models.DateTimeField(auto_now_add=True)\n    @property\n    def image_url(self):\n        return f\"{settings.BASE_URL}{self.image.url}\"\n    def __str__(self):\n        return self.image.url \nclass OTP(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)",
+        "detail": "users.models",
+        "documentation": {}
+    },
+    {
         "label": "OTP",
         "kind": 6,
         "importPath": "users.models",
         "description": "users.models",
-        "peekOfCode": "class OTP(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    otp = models.CharField(max_length=6)\n    created_at = models.DateTimeField(auto_now_add=True)\n    expires_At = models.DateTimeField(default=timezone.now() + timedelta(minutes=5))\n    def generate_otp(self):\n        otp = ''.join(random.choices(string.digits, k=6))\n        return otp\n    def is_expired(self):\n        print(\"timezonenow\", timezone.now())",
+        "peekOfCode": "class OTP(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    otp = models.CharField(max_length=6)\n    created_at = models.DateTimeField(auto_now_add=True)\n    expires_At = models.DateTimeField()\n    def generate_otp(self):\n        otp = ''.join(random.choices(string.digits, k=6))\n        return otp\n    def is_expired(self):\n        print(\"timezonenow\", timezone.now())",
         "detail": "users.models",
         "documentation": {}
     },
@@ -872,11 +1040,20 @@
         "documentation": {}
     },
     {
+        "label": "MediaSerializer",
+        "kind": 6,
+        "importPath": "users.serializers",
+        "description": "users.serializers",
+        "peekOfCode": "class MediaSerializer(serializers.ModelSerializer):\n    image_url = serializers.SerializerMethodField()\n    class Meta:\n        model = Media\n        fields = ['id', 'image', 'created_at', 'image_url']\n    def get_image_url(self, obj):\n        return obj.image_url      \nclass UserSerializer(serializers.ModelSerializer):\n    blog_posts = BlogPostSerializer(many=True, read_only=True)  \n    class Meta:",
+        "detail": "users.serializers",
+        "documentation": {}
+    },
+    {
         "label": "UserSerializer",
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    blog_posts = BlogPostSerializer(many=True, read_only=True)  # Add blog posts to the user serializer\n    class Meta:\n        model = User\n        fields = ['id', 'name', 'email', 'password', 'blog_posts']  # Include 'blog_posts' in the fields\n        extra_kwargs = {\n            'password': {'write_only': True},\n        }\n    def __init__(self, *args, **kwargs):\n        # Check if the context contains the request and the view name",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    blog_posts = BlogPostSerializer(many=True, read_only=True)  \n    class Meta:\n        model = User\n        fields = ['id', 'name', 'email', 'password', 'blog_posts'] \n        extra_kwargs = {\n            'password': {'write_only': True},\n        }\n    def __init__(self, *args, **kwargs):\n        request = kwargs.get('context', {}).get('request', None)",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -885,7 +1062,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class ForgotPasswordSerializer(serializers.Serializer):\n    email = serializers.EmailField()\n    def validate_email(self, value):\n        try:\n            user =User.objects.get(email=value)\n        except User.DoesNotExist:\n            raise serializers.ValidationError(\"No user is associated with this email address.\")\n        return value\nclass OTPVerificationSerializer(serializers.Serializer):\n    otp = serializers.CharField(max_length=6)",
+        "peekOfCode": "class ForgotPasswordSerializer(serializers.Serializer):\n    email = serializers.EmailField()\n    def validate_email(self, value):\n        try:\n            user = User.objects.get(email=value)\n        except User.DoesNotExist:\n            raise serializers.ValidationError(\"No user is associated with this email address.\")\n        return value\nclass OTPVerificationSerializer(serializers.Serializer):\n    otp = serializers.CharField(max_length=6)",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -930,7 +1107,7 @@
         "kind": 5,
         "importPath": "users.urls",
         "description": "users.urls",
-        "peekOfCode": "urlpatterns = [\n    path('register/', RegisterView.as_view()),\n    path('login/', LoginView.as_view()),\n    path('cms/posts/', BlogPostListView.as_view(), name='post-list'),\n    path('web/posts/', BlogPostListView.as_view(), name='web-post-list'),\n    path('user/', UserView.as_view(), name='get_user'),\n    path('posts/', BlogPostListView.as_view(), name='post-list'), \n    # path('myposts/')\n    path('posts/<int:pk>/', BlogPostDetailView.as_view(), name='post-detail'), \n    path('deletePosts/<int:pk>/', BlogPostDeleteView.as_view(), name='blogpost-delete'),",
+        "peekOfCode": "urlpatterns = [\n    #Web APP  \n    #Auth\n    path('web/auth/register/', RegisterView.as_view()),\n    path('web/auth/login/', LoginView.as_view()),\n    path('web/auth/verifyemail/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),\n    path('web/auth/forgotPassword/', ForgotPasswordView.as_view(), name='forgot-password'), \n    path('web/auth/changePassword/<int:id>/', ChangePassword.as_view(), name='change password'), #use this when you remember the password.\n    path('web/auth/profile/', UserView.as_view(), name='get_user'),\n    path('web/auth/verifyOtp/', OTPVerificationView.as_view(), name='verify-otp'), #otp for forgot password.",
         "detail": "users.urls",
         "documentation": {}
     },
@@ -966,7 +1143,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticated]\n    def perform_update(self, serializer):\n        serializer.save(author=self.request.user)\n    def get_object(self):\n        obj = super().get_object()\n        if obj.author != self.request.user:\n            raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
+        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        obj = super().get_object()\n        # Restrict edit permissions to only the author\n        if self.request.method in ['PUT', 'PATCH', 'DELETE']:\n            if obj.author != self.request.user:\n                raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
         "detail": "users.views",
         "documentation": {}
     },
@@ -975,16 +1152,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class UserView(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get(self, request):\n        user = request.user\n        serializer = UserSerializer(user) \n        return Response(serializer.data)\nclass BlogPostDeleteView(generics.DestroyAPIView):\n    queryset = BlogPost.objects.all()\n    permission_classes = [permissions.IsAuthenticated]",
-        "detail": "users.views",
-        "documentation": {}
-    },
-    {
-        "label": "BlogPostDeleteView",
-        "kind": 6,
-        "importPath": "users.views",
-        "description": "users.views",
-        "peekOfCode": "class BlogPostDeleteView(generics.DestroyAPIView):\n    queryset = BlogPost.objects.all()\n    permission_classes = [permissions.IsAuthenticated]\n    def delete(self, request, *args, **kwargs):\n        post = self.get_object()  \n        if request.query_params.get('hard_delete', False):\n            post.hard_delete() \n        else:\n            post.soft_delete()  \n        return Response(status=status.HTTP_204_NO_CONTENT)",
+        "peekOfCode": "class UserView(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get(self, request):\n        # Get the user object for the authenticated user\n        user = request.user\n        serializer = UserSerializer(user)\n        return Response(serializer.data)\n    def patch(self, request):\n        # Update the user information with the data from the request",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1011,7 +1179,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class ForgotPasswordView(APIView):\n    def post(self, request):\n        serializer = ForgotPasswordSerializer(data=request.data)\n        if serializer.is_valid():\n            user = User.objects.get(email=serializer.validated_data['email'])\n            # we are deleting all the past otps \n            OTP.objects.filter(user=user).delete()\n            otp = OTP(user=user)\n            otp.otp = otp.generate_otp()\n            otp.expires_at = (timezone.now() + timedelta(minutes=10))  # OTP expires in 10 minutes",
+        "peekOfCode": "class ForgotPasswordView(APIView):\n    def post(self, request):\n        serializer = ForgotPasswordSerializer(data=request.data)\n        if serializer.is_valid():\n            user = User.objects.get(email=serializer.validated_data['email'])\n            # we are deleting all the past otps \n            OTP.objects.filter(user=user).delete()\n            otp = OTP(user=user)\n            otp.otp = otp.generate_otp()\n            otp.expires_At = (timezone.now() + timedelta(minutes=10))  # OTP expires in 10 minutes",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1030,6 +1198,33 @@
         "importPath": "users.views",
         "description": "users.views",
         "peekOfCode": "class PasswordResetView(APIView):\n    def post(self, request):\n        token = request.data.get('token')  # Get the refresh token\n        user = self.get_user_from_token(token)\n        if not user:\n            return Response({\"error\": \"Invalid or expired token.\"}, status=status.HTTP_400_BAD_REQUEST)\n        serializer = PasswordResetSerializer(data=request.data)\n        if serializer.is_valid():\n            user.set_password(serializer.validated_data['password'])\n            user.save()",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "MediaUploadView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class MediaUploadView(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def post(self, request, *args, **kwargs):\n        serializer = MediaSerializer(data=request.data)\n        if serializer.is_valid():\n            serializer.save()\n            return Response(serializer.data, status=status.HTTP_201_CREATED)\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\nclass MediaListView(ListAPIView):",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "MediaListView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class MediaListView(ListAPIView):\n    queryset = Media.objects.all()\n    serializer_class = MediaSerializer    \nclass MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user, is_deleted=False)",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "MyPostsView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user, is_deleted=False)",
         "detail": "users.views",
         "documentation": {}
     },

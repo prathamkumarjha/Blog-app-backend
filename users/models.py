@@ -4,6 +4,7 @@ from django.utils import timezone
 import string
 import random
 from datetime import timedelta
+from django.conf import settings
 # Create your models here.
 class User(AbstractUser):
     name= models.CharField(max_length=255)
@@ -14,7 +15,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
   
   
-  
+
 class BlogPostManager(models.Manager):
     def active(self):
         return self.filter(is_deleted=False)   
@@ -37,15 +38,24 @@ class BlogPost(models.Model):
         self.save()
     
     def hard_delete(self):
-        
         super(BlogPost, self).delete()     
  
-    
+class Media(models.Model):
+    image = models.ImageField(upload_to='media/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def image_url(self):
+        return f"{settings.BASE_URL}{self.image.url}"
+
+    def __str__(self):
+        return self.image.url 
+      
 class OTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     otp = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_At = models.DateTimeField(default=timezone.now() + timedelta(minutes=5))
+    expires_At = models.DateTimeField()
     
     
     def generate_otp(self):
@@ -55,4 +65,5 @@ class OTP(models.Model):
     def is_expired(self):
         print("timezonenow", timezone.now())
         print("expiryAt",self.expires_At)
+        
         return timezone.now() > self.expires_At
