@@ -131,6 +131,14 @@
         "documentation": {}
     },
     {
+        "label": "TokenRefreshView",
+        "importPath": "rest_framework_simplejwt.views",
+        "description": "rest_framework_simplejwt.views",
+        "isExtraImport": true,
+        "detail": "rest_framework_simplejwt.views",
+        "documentation": {}
+    },
+    {
         "label": "static",
         "importPath": "django.conf.urls.static",
         "description": "django.conf.urls.static",
@@ -1094,7 +1102,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.IntegerField(read_only=True)  # Add this field to include the number of likes\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count']\n        read_only_fields = ['author']\n    def create(self, validated_data):\n        print(\"Initial data:\", self.initial_data)  # Debug print\n        print(\"Validated data:\", validated_data)  # Debug print\n        return BlogPost.objects.create(author=self.context['request'].user, **validated_data)",
+        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count']\n        read_only_fields = ['author']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):\n        print(\"Initial data:\", self.initial_data)  # Debug print",
         "detail": "users.serializers",
         "documentation": {}
     },

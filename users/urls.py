@@ -2,6 +2,7 @@ from django.urls import path
 from auth.settings import MEDIA_ROOT
 from .views import LikeBlogsView, LoginView, RegisterView, UserView
 from .views import BlogPostListView, BlogPostDetailView, ActivateAccount, ChangePassword, ForgotPasswordView, OTPVerificationView, PasswordResetView, MediaUploadView, MyPostsView
+from rest_framework_simplejwt.views import TokenRefreshView
 # from rest_framework_simplejwt.views import (
 #     TokenObtainPairView,
 #     TokenRefreshView,
@@ -19,7 +20,7 @@ urlpatterns = [
     path('web/auth/verifyOtp/', OTPVerificationView.as_view(), name='verify-otp'), #otp for forgot password.
     path('web/auth/resetPassword/', PasswordResetView.as_view(), name='reset-password'), #if otp is correct you will be redirected here.
     path('web/auth/upload/', MediaUploadView.as_view(), name='media-upload'),
-   
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
    #Posts
     path('web/posts/', BlogPostListView.as_view(), name='web-post-list'),  #list all the published posts and also can create a new post if the user is authenticated 
     path('web/myposts',MyPostsView.as_view(), name='my-post-list'), #list all the user posts

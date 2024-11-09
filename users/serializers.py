@@ -1,22 +1,27 @@
 import django.conf
 from rest_framework import serializers
 from auth.settings import BASE_URL
-from .models import BlogPost, User, OTP, Media
+from .models import BlogPost, User, OTP, Media, LikedBlogs
 
 class BlogPostSerializer(serializers.ModelSerializer):
-    likes_count = serializers.IntegerField(read_only=True)  # Add this field to include the number of likes
+    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes
 
     class Meta:
         model = BlogPost
         fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count']
         read_only_fields = ['author']
 
+
+    def get_likes_count(self, obj):
+        return LikedBlogs.objects.filter(blogpost=obj).count()
+
+    
     def create(self, validated_data):
         print("Initial data:", self.initial_data)  # Debug print
         print("Validated data:", validated_data)  # Debug print
         return BlogPost.objects.create(author=self.context['request'].user, **validated_data)
     
-    
+   
 
 class MediaSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
