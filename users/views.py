@@ -73,7 +73,7 @@ class LoginView(APIView):
 
 
 class BlogPostListView(generics.ListCreateAPIView):
-    queryset = BlogPost.objects.filter(is_deleted=False)
+    queryset = BlogPost.objects.filter(is_deleted=False).order_by('-created_at')
     serializer_class = BlogPostSerializer
 
     def get_permissions(self):
@@ -94,7 +94,7 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
     def get_object(self):
-        obj = super().get_object()
+        obj = super().get_object().order_by('-created_at')
         # Restrict edit permissions to only the author
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             if obj.author != self.request.user:
@@ -270,7 +270,7 @@ class MyPostsView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return BlogPost.objects.filter(author=user)        
+        return BlogPost.objects.filter(author=user).order_by('-created_at')        
     
     
 class LikeBlogsView(APIView):

@@ -1201,7 +1201,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostListView(generics.ListCreateAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    def get_permissions(self):\n        if self.request.method == 'GET':\n            return [permissions.AllowAny()]\n        return [permissions.IsAuthenticated()] \n    def get_queryset(self):\n        # Annotate the queryset with the count of likes\n        return BlogPost.objects.annotate(",
+        "peekOfCode": "class BlogPostListView(generics.ListCreateAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    def get_permissions(self):\n        if self.request.method == 'GET':\n            return [permissions.AllowAny()]\n        return [permissions.IsAuthenticated()] \n    def get_queryset(self):\n        # Annotate the queryset with the count of likes\n        return BlogPost.objects.annotate(",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1210,7 +1210,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        obj = super().get_object()\n        # Restrict edit permissions to only the author\n        if self.request.method in ['PUT', 'PATCH', 'DELETE']:\n            if obj.author != self.request.user:\n                raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
+        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        obj = super().get_object().order_by('-created_at')\n        # Restrict edit permissions to only the author\n        if self.request.method in ['PUT', 'PATCH', 'DELETE']:\n            if obj.author != self.request.user:\n                raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1282,7 +1282,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user)        \nclass LikeBlogsView(APIView):\n    permission_classes = [IsAuthenticated]\n    def post(self, request, *args, **kwargs):",
+        "peekOfCode": "class MyPostsView(generics.ListAPIView):\n    serializer_class = BlogPostSerializer\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def get_queryset(self):\n        user = self.request.user\n        return BlogPost.objects.filter(author=user).order_by('-created_at')        \nclass LikeBlogsView(APIView):\n    permission_classes = [IsAuthenticated]\n    def post(self, request, *args, **kwargs):",
         "detail": "users.views",
         "documentation": {}
     },
