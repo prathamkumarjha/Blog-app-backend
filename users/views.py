@@ -94,7 +94,7 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
     def get_object(self):
-        obj = super().get_object().order_by('-created_at')
+        obj = super().get_object()
         # Restrict edit permissions to only the author
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             if obj.author != self.request.user:
