@@ -367,6 +367,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -1035,6 +1051,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "users.migrations.0009_blogpost_summary_user_designation_user_image_and_more",
+        "description": "users.migrations.0009_blogpost_summary_user_designation_user_image_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0008_alter_otp_expires_at_likedblogs'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='blogpost',\n            name='summary',\n            field=models.CharField(default='no summary', max_length=250),\n        ),",
+        "detail": "users.migrations.0009_blogpost_summary_user_designation_user_image_and_more",
+        "documentation": {}
+    },
+    {
         "label": "UsersConfig",
         "kind": 6,
         "importPath": "users.apps",
@@ -1048,7 +1073,7 @@
         "kind": 6,
         "importPath": "users.models",
         "description": "users.models",
-        "peekOfCode": "class User(AbstractUser):\n    name= models.CharField(max_length=255)\n    email = models.CharField(max_length=255, unique=True)\n    password = models.CharField(max_length=255, unique=True)\n    username = None\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = []\nclass BlogPostManager(models.Manager):\n    def active(self):\n        return self.filter(is_deleted=False)   ",
+        "peekOfCode": "class User(AbstractUser):\n    class DesignationChoices(models.TextChoices):\n        ADMIN = 'Admin', 'Admin'\n        SUPER_ADMIN = 'Super Admin', 'Super Admin'\n        USER = 'User', 'User'\n    name= models.CharField(max_length=255)\n    email = models.EmailField(max_length=255, unique=True)\n    password = models.CharField(max_length=255)\n    designation = models.CharField(\n        max_length=50,",
         "detail": "users.models",
         "documentation": {}
     },
@@ -1057,7 +1082,7 @@
         "kind": 6,
         "importPath": "users.models",
         "description": "users.models",
-        "peekOfCode": "class BlogPostManager(models.Manager):\n    def active(self):\n        return self.filter(is_deleted=False)   \nclass BlogPost(models.Model):\n    title = models.CharField(max_length=200)\n    content= models.TextField() \n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)   \n    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')\n    is_deleted = models.BooleanField(default=False)",
+        "peekOfCode": "class BlogPostManager(models.Manager):\n    def active(self):\n        return self.filter(is_deleted=False)   \nclass BlogPost(models.Model):\n    title = models.CharField(max_length=200)\n    summary = models.CharField(max_length=250, default=\"no summary\")\n    content= models.TextField() \n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)   \n    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')",
         "detail": "users.models",
         "documentation": {}
     },
@@ -1066,7 +1091,7 @@
         "kind": 6,
         "importPath": "users.models",
         "description": "users.models",
-        "peekOfCode": "class BlogPost(models.Model):\n    title = models.CharField(max_length=200)\n    content= models.TextField() \n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)   \n    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')\n    is_deleted = models.BooleanField(default=False)\n    deleted_at = models.DateTimeField(null=True, blank=True)\n    objects = BlogPostManager()\n    def soft_delete(self):",
+        "peekOfCode": "class BlogPost(models.Model):\n    title = models.CharField(max_length=200)\n    summary = models.CharField(max_length=250, default=\"no summary\")\n    content= models.TextField() \n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)   \n    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')\n    is_deleted = models.BooleanField(default=False)\n    deleted_at = models.DateTimeField(null=True, blank=True)\n    objects = BlogPostManager()",
         "detail": "users.models",
         "documentation": {}
     },
@@ -1102,7 +1127,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count']\n        read_only_fields = ['author']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):\n        print(\"Initial data:\", self.initial_data)  # Debug print",
+        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count', 'summary']\n        read_only_fields = ['author']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):\n        print(\"Initial data:\", self.initial_data)  # Debug print",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -1210,7 +1235,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False)\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        obj = super().get_object()\n        # Restrict edit permissions to only the author\n        if self.request.method in ['PUT', 'PATCH', 'DELETE']:\n            if obj.author != self.request.user:\n                raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
+        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        obj = super().get_object()\n        # Restrict edit permissions to only the author\n        if self.request.method in ['PUT', 'PATCH', 'DELETE']:\n            if obj.author != self.request.user and self.request.user.designation != \"Super Admin\" :\n                raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
         "detail": "users.views",
         "documentation": {}
     },

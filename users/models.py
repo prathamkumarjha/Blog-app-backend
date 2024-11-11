@@ -7,9 +7,21 @@ import random
 from django.conf import settings
 # Create your models here.
 class User(AbstractUser):
+    
+    class DesignationChoices(models.TextChoices):
+        ADMIN = 'Admin', 'Admin'
+        SUPER_ADMIN = 'Super Admin', 'Super Admin'
+        USER = 'User', 'User'
+       
     name= models.CharField(max_length=255)
-    email = models.CharField(max_length=255, unique=True)
-    password = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
+    password = models.CharField(max_length=255)
+    designation = models.CharField(
+        max_length=50,
+        choices=DesignationChoices.choices,
+        default=DesignationChoices.USER,
+    ) 
+    image= models.CharField(blank=True, null=True)
     username = None
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -23,6 +35,7 @@ class BlogPostManager(models.Manager):
      
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
+    summary = models.CharField(max_length=250, default="no summary")
     content= models.TextField() 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   

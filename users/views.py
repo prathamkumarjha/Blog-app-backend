@@ -84,20 +84,21 @@ class BlogPostListView(generics.ListCreateAPIView):
         # Annotate the queryset with the count of likes
         return BlogPost.objects.annotate(
             likes_count=Count('likedblogs')
-        ).filter(is_deleted=False)
+        ).filter(is_deleted=False).order_by('-created_at')
     def perform_create(self, serializer):
         serializer.save()
 
 class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BlogPost.objects.filter(is_deleted=False)
+    queryset = BlogPost.objects.filter(is_deleted=False).order_by('-created_at')
     serializer_class = BlogPostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
     def get_object(self):
         obj = super().get_object()
         # Restrict edit permissions to only the author
+        
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
-            if obj.author != self.request.user:
+            if obj.author != self.request.user and self.request.user.designation != "Super Admin" :
                 raise permissions.PermissionDenied("You do not have permission to edit this blog post.")
         return obj
 
