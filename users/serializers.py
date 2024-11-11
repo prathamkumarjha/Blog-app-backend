@@ -3,25 +3,7 @@ from rest_framework import serializers
 from auth.settings import BASE_URL
 from .models import BlogPost, User, OTP, Media, LikedBlogs
 
-class BlogPostSerializer(serializers.ModelSerializer):
-    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes
 
-    class Meta:
-        model = BlogPost
-        fields = ['id', 'title', 'content', 'created_at', 'updated_at', 'author', 'is_deleted', 'likes_count', 'summary']
-        read_only_fields = ['author']
-
-
-    def get_likes_count(self, obj):
-        return LikedBlogs.objects.filter(blogpost=obj).count()
-
-    
-    def create(self, validated_data):
-        print("Initial data:", self.initial_data)  # Debug print
-        print("Validated data:", validated_data)  # Debug print
-        return BlogPost.objects.create(author=self.context['request'].user, **validated_data)
-    
-   
 
 class MediaSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
@@ -38,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'name', 'email', 'password'] 
+        fields = ['id', 'name', 'email', 'password', 'image'] 
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -64,6 +46,27 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+
+class BlogPostSerializer(serializers.ModelSerializer):
+    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes
+    author = UserSerializer(read_only=True)
+    class Meta:
+        model = BlogPost
+        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'likes_count', 'summary','author', 'thumbnail']
+        read_only_fields = ['author']
+
+
+    def get_likes_count(self, obj):
+        return LikedBlogs.objects.filter(blogpost=obj).count()
+
+    
+    def create(self, validated_data):
+        print("Initial data:", self.initial_data)  # Debug print
+        print("Validated data:", validated_data)  # Debug print
+        return BlogPost.objects.create(author=self.context['request'].user, **validated_data)
+    
+   
+   
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField()
 

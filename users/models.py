@@ -43,7 +43,7 @@ class BlogPost(models.Model):
     is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, blank=True)
     objects = BlogPostManager()
-    
+    thumbnail = models.TextField()
     
     def soft_delete(self):
         self.is_deleted = True

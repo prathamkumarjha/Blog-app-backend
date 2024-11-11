@@ -73,7 +73,7 @@ class LoginView(APIView):
 
 
 class BlogPostListView(generics.ListCreateAPIView):
-    queryset = BlogPost.objects.filter(is_deleted=False).order_by('-created_at')
+    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')
     serializer_class = BlogPostSerializer
 
     def get_permissions(self):
@@ -83,13 +83,14 @@ class BlogPostListView(generics.ListCreateAPIView):
     def get_queryset(self):
         # Annotate the queryset with the count of likes
         return BlogPost.objects.annotate(
-            likes_count=Count('likedblogs')
-        ).filter(is_deleted=False).order_by('-created_at')
+            likes_count=Count('likedblogs'),
+        ).filter(is_deleted=False).select_related('author').order_by('-created_at')
+        
     def perform_create(self, serializer):
         serializer.save()
 
 class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BlogPost.objects.filter(is_deleted=False).order_by('-created_at')
+    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')
     serializer_class = BlogPostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
