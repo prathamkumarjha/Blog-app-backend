@@ -560,6 +560,14 @@
         "documentation": {}
     },
     {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
         "label": "sys",
         "kind": 6,
         "isExtraImport": true,
@@ -978,7 +986,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    author = UserSerializer(read_only=True)\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'likes_count', 'summary','author', 'thumbnail', 'is_archived']\n        read_only_fields = ['author']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):",
+        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    author = UserSerializer(read_only=True)\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'likes_count', 'summary','author', 'thumbnail', 'is_archived']\n        read_only_fields = ['author', 'created_at', 'updated_at','likes_count']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):",
         "detail": "users.serializers",
         "documentation": {}
     },
@@ -1059,7 +1067,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostListView(generics.ListCreateAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    def get_permissions(self):\n        if self.request.method == 'GET':\n            return [permissions.AllowAny()]\n        return [permissions.IsAuthenticated()] \n    def get_queryset(self):\n        # Annotate the queryset with the count of likes\n        return BlogPost.objects.annotate(",
+        "peekOfCode": "class BlogPostListView(generics.ListCreateAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False, is_archived=False).select_related('author').order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    def get_permissions(self):\n        if self.request.method == 'GET':\n            return [permissions.AllowAny()]\n        return [permissions.IsAuthenticated()] \n    def get_queryset(self):\n        # Annotate the queryset with the count of likes\n        return BlogPost.objects.annotate(",
         "detail": "users.views",
         "documentation": {}
     },
@@ -1069,6 +1077,15 @@
         "importPath": "users.views",
         "description": "users.views",
         "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        obj = super().get_object()\n        # Restrict edit permissions to only the author\n        if self.request.method in ['PUT', 'PATCH', 'DELETE']:\n            if obj.author != self.request.user and self.request.user.designation != \"Super Admin\" :\n                raise permissions.PermissionDenied(\"You do not have permission to edit this blog post.\")",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
+        "label": "BlogPostByTitleView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class BlogPostByTitleView(APIView):\n    def get(self, request):\n        title = request.data.get('title')\n        if not title:\n            return Response({\"error\": \"Title is required.\"}, status=status.HTTP_400_BAD_REQUEST)\n        try:\n            blog_post = BlogPost.objects.get(title=title)\n        except BlogPost.DoesNotExist:\n            return Response({\"error\": \"Blog post not found.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = BlogPostSerializer(blog_post)",
         "detail": "users.views",
         "documentation": {}
     },

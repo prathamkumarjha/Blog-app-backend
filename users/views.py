@@ -20,6 +20,7 @@ from datetime import timedelta
 from .models import Media
 from rest_framework.generics import ListAPIView
 from django.db.models import Count
+from django.shortcuts import get_object_or_404
 
 class RegisterView(APIView):
     def post(self, request):
@@ -74,7 +75,7 @@ class LoginView(APIView):
 
 
 class BlogPostListView(generics.ListCreateAPIView):
-    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')
+    queryset = BlogPost.objects.filter(is_deleted=False, is_archived=False).select_related('author').order_by('-created_at')
     serializer_class = BlogPostSerializer
 
     def get_permissions(self):
@@ -121,6 +122,21 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
             instance.deleted_at = timezone.now()
             instance.save()
             return Response({'message':'Post moved to trash'})
+
+
+
+class BlogPostByTitleView(APIView):
+    def get(self, request):
+        title = request.data.get('title')
+        
+        if not title:
+            return Response({"error": "Title is required."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            blog_post = BlogPost.objects.get(title=title)
+        except BlogPost.DoesNotExist:
+            return Response({"error": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)
+        serializer = BlogPostSerializer(blog_post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
         
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
