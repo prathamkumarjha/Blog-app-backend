@@ -45,6 +45,7 @@ class BlogPost(models.Model):
     objects = BlogPostManager()
     thumbnail = models.TextField()
     is_archived = models.BooleanField(default=False)
+    claps = models.IntegerField(default=0)
     def soft_delete(self):
         self.is_deleted = True
         self.deleted_at = timezone.now()
@@ -85,15 +86,15 @@ class OTP(models.Model):
         
         return timezone.now() > self.expires_At
     
-class LikedBlogs(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+# class LikedBlogs(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['user', 'blogpost'], name='unique_user_blogpost_like')
-        ]
+#     class Meta:
+#         constraints = [
+#             models.UniqueConstraint(fields=['user', 'blogpost'], name='unique_user_blogpost_like')
+#         ]
 
-    def __str__(self):
-        return f"User {self.user} liked BlogPost {self.blogpost.id}"
+#     def __str__(self):
+#         return f"User {self.user} liked BlogPost {self.blogpost.id}"
         

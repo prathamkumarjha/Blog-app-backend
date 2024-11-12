@@ -1,7 +1,7 @@
 import django.conf
 from rest_framework import serializers
 from auth.settings import BASE_URL
-from .models import BlogPost, User, OTP, Media, LikedBlogs
+from .models import BlogPost, User, OTP, Media
 
 
 
@@ -48,21 +48,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BlogPostSerializer(serializers.ModelSerializer):
-    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes
     author = UserSerializer(read_only=True)
     class Meta:
         model = BlogPost
-        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'likes_count', 'summary','author', 'thumbnail', 'is_archived']
-        read_only_fields = ['author', 'created_at', 'updated_at','likes_count']
+        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'summary','author', 'thumbnail', 'is_archived', 'claps']
+        read_only_fields = ['id','author', 'created_at', 'updated_at']
 
 
-    def get_likes_count(self, obj):
-        return LikedBlogs.objects.filter(blogpost=obj).count()
 
     
     def create(self, validated_data):
-        print("Initial data:", self.initial_data)  # Debug print
-        print("Validated data:", validated_data)  # Debug print
         return BlogPost.objects.create(author=self.context['request'].user, **validated_data)
     
    

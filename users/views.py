@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from rest_framework.permissions import IsAuthenticated
 from users.serializers import BlogPostSerializer, ForgotPasswordSerializer, UserSerializer, ForgotPasswordSerializer, PasswordResetSerializer, OTPVerificationSerializer, MediaSerializer
-from .models import User, BlogPost, OTP, LikedBlogs
+from .models import User, BlogPost, OTP
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
@@ -21,7 +21,8 @@ from .models import Media
 from rest_framework.generics import ListAPIView
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-
+from rest_framework.exceptions import NotFound, PermissionDenied
+from django.db.models import Q
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -71,7 +72,7 @@ class LoginView(APIView):
         })
 
 
-# class ArchiveView()
+
 
 
 class BlogPostListView(generics.ListCreateAPIView):
@@ -83,10 +84,7 @@ class BlogPostListView(generics.ListCreateAPIView):
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()] 
     def get_queryset(self):
-        # Annotate the queryset with the count of likes
-        return BlogPost.objects.annotate(
-            likes_count=Count('likedblogs'),
-        ).filter(is_deleted=False).select_related('author').order_by('-created_at')
+        return BlogPost.objects.annotate().filter(is_deleted=False).select_related('author').order_by('-created_at')
         
     def perform_create(self, serializer):
         serializer.save()
@@ -97,55 +95,54 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
     def get_object(self):
-        # Restrict edit permissions to only the author
-        if self.request.method == 'DELETE' or self.request.method == 'PATCH':
+        # Retrieve the object, allowing access to soft-deleted items for PATCH and DELETE requests
+        if self.request.method in ['DELETE', 'PATCH']:
             obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts
         else:
             obj = super().get_object()  # Use the default queryset filtering for non-deleted posts
         
+        # If the object is not found, raise a NotFound error
         if not obj:
-            raise PermissionDenied("Blog post not found.")
+            raise NotFound("Blog post not found.")
 
-
+        # Restrict edit and delete permissions to the author or Super Admin
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
-            if obj.author != self.request.user and self.request.user.designation != "Super Admin" :
-                raise permissions.PermissionDenied("You do not have permission to edit this blog post.")
+            if obj.author != self.request.user and self.request.user.designation != "Super Admin":
+                raise PermissionDenied("You do not have permission to edit or delete this blog post.")
+        
         return obj
 
     def perform_update(self, serializer):
-        # Only allow the author to update the post
+        # Allow only the author to update the post
         serializer.save(author=self.request.user)
-        return Response({'message':'Post Updated'})
-  
+
     def perform_destroy(self, instance):
         if instance.author != self.request.user and self.request.user.designation != "Super Admin":
             raise PermissionDenied("You do not have permission to delete this post.")
-            
+        
+        # Handle soft delete or permanent delete
         if instance.is_deleted:
-          instance.delete() 
-          return Response({'message':'Post deleted permanently'}) 
-        else:  
+            instance.delete()
+            return Response({'message': 'Post deleted permanently'})
+        else:
             instance.is_deleted = True
             instance.deleted_at = timezone.now()
             instance.save()
-            return Response({'message':'Post moved to trash'})
+            return Response({'message': 'Post moved to trash'})
 
-
-
-class BlogPostByTitleView(APIView):
-    def get(self, request, title):
-        # title = request.query_params.get('title')
-        if not title:
-            return Response({"error": "Title is required."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        
-        blog_posts = BlogPost.objects.filter(title__icontains=title, is_archived=False)
-        if not blog_posts.exists():
-            return Response({"error": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = BlogPostSerializer(blog_posts, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+class BlogPostSearchView(APIView):
+    def get(self, request):
+        search_term = request.query_params.get('q', '')
+        if search_term:
+            posts = BlogPost.objects.filter(
+                Q(title__icontains=search_term) | Q(summary__icontains=search_term),
+                is_deleted=False, is_archived=False
+            )
+        else:
+             return Response(status=status.HTTP_204_NO_CONTENT)
+        serialized_posts = BlogPostSerializer(posts, many=True)
+        return Response(serialized_posts.data)
+    
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -300,25 +297,15 @@ class MyPostsView(generics.ListAPIView):
         return BlogPost.objects.filter(author=user).order_by('-created_at')        
     
     
-class LikeBlogsView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        blogpost_id = request.data.get('blogpost_id')
-
-        if not blogpost_id:
-            return Response({"message": "Blog post ID is required."}, status=status.HTTP_400_BAD_REQUEST)
-
+class IncreaseClapsView(APIView):
+    permission_classes=[IsAuthenticated]
+    
+    def patch(self, request, pk):
         try:
-            blogpost = BlogPost.objects.get(id=blogpost_id)
+            blog_post = BlogPost.objects.get(pk=pk, is_deleted=False)
+            blog_post.claps += 1
+            blog_post.save()
+            
+            return Response({"claps":blog_post.claps},status=status.HTTP_200_OK)
         except BlogPost.DoesNotExist:
-            return Response({"message": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)
-        user = request.user
-        existingLike = LikedBlogs.objects.filter(user=user,blogpost=blogpost).first()
-        if existingLike:
-            existingLike.delete()
-            return Response({"message":"Blog post unliked soccessfully"}, status=status.HTTP_200_OK)
-        else:
-            LikedBlogs.objects.create(user=user, blogpost=blogpost)    
-            return Response({"message":"Blog post liked successfully"}, status = status.HTTP_201_CREATED)
-           
+            return Response({"error": "Blog post not found"}, status=status.HTTP_404_NOT_FOUND)
