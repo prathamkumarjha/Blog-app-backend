@@ -98,7 +98,7 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         # Restrict edit permissions to only the author
-        if self.request.method == 'DELETE':
+        if self.request.method == 'DELETE' or self.request.method == 'PATCH':
             obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts
         else:
             obj = super().get_object()  # Use the default queryset filtering for non-deleted posts

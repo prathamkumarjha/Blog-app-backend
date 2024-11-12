@@ -1076,7 +1076,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        # Restrict edit permissions to only the author\n        if self.request.method == 'DELETE':\n            obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts\n        else:\n            obj = super().get_object()  # Use the default queryset filtering for non-deleted posts",
+        "peekOfCode": "class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        # Restrict edit permissions to only the author\n        if self.request.method == 'DELETE' or self.request.method == 'PATCH':\n            obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts\n        else:\n            obj = super().get_object()  # Use the default queryset filtering for non-deleted posts",
         "detail": "users.views",
         "documentation": {}
     },
