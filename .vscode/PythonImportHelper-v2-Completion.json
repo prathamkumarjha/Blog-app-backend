@@ -25,15 +25,6 @@
         "documentation": {}
     },
     {
-        "label": "datetime",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "datetime",
-        "description": "datetime",
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
         "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
@@ -188,14 +179,6 @@
         "documentation": {}
     },
     {
-        "label": "settings",
-        "importPath": "django.conf",
-        "description": "django.conf",
-        "isExtraImport": true,
-        "detail": "django.conf",
-        "documentation": {}
-    },
-    {
         "label": "get_wsgi_application",
         "importPath": "django.core.wsgi",
         "description": "django.core.wsgi",
@@ -236,134 +219,6 @@
         "importPath": "django.utils.timezone",
         "description": "django.utils.timezone",
         "detail": "django.utils.timezone",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "migrations",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "importPath": "django.db",
-        "description": "django.db",
-        "isExtraImport": true,
-        "detail": "django.db",
         "documentation": {}
     },
     {
@@ -1015,98 +870,26 @@
         "kind": 6,
         "importPath": "users.migrations.0001_initial",
         "description": "users.migrations.0001_initial",
-        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('auth', '0012_alter_user_first_name_max_length'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='User',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('auth', '0012_alter_user_first_name_max_length'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Media',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
         "detail": "users.migrations.0001_initial",
         "documentation": {}
     },
     {
         "label": "Migration",
         "kind": 6,
-        "importPath": "users.migrations.0002_alter_otp_expires_at",
-        "description": "users.migrations.0002_alter_otp_expires_at",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(default=datetime.datetime(2024, 11, 6, 8, 25, 34, 553297, tzinfo=datetime.timezone.utc)),\n        ),",
-        "detail": "users.migrations.0002_alter_otp_expires_at",
+        "importPath": "users.migrations.0002_blogpost_is_archived_and_more",
+        "description": "users.migrations.0002_blogpost_is_archived_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0001_initial'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='blogpost',\n            name='is_archived',\n            field=models.BooleanField(default=True),\n        ),",
+        "detail": "users.migrations.0002_blogpost_is_archived_and_more",
         "documentation": {}
     },
     {
         "label": "Migration",
         "kind": 6,
-        "importPath": "users.migrations.0003_alter_otp_expires_at",
-        "description": "users.migrations.0003_alter_otp_expires_at",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0002_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(default=datetime.datetime(2024, 11, 6, 10, 53, 34, 91857, tzinfo=datetime.timezone.utc)),\n        ),",
-        "detail": "users.migrations.0003_alter_otp_expires_at",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0004_alter_otp_expires_at",
-        "description": "users.migrations.0004_alter_otp_expires_at",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0003_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(default=datetime.datetime(2024, 11, 6, 11, 52, 49, 673253, tzinfo=datetime.timezone.utc)),\n        ),",
-        "detail": "users.migrations.0004_alter_otp_expires_at",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0005_alter_otp_expires_at",
-        "description": "users.migrations.0005_alter_otp_expires_at",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0004_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(default=datetime.datetime(2024, 11, 6, 11, 58, 41, 197779, tzinfo=datetime.timezone.utc)),\n        ),",
-        "detail": "users.migrations.0005_alter_otp_expires_at",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0006_media_alter_otp_expires_at",
-        "description": "users.migrations.0006_media_alter_otp_expires_at",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0005_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Media',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('image', models.ImageField(upload_to='media/')),",
-        "detail": "users.migrations.0006_media_alter_otp_expires_at",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0007_alter_otp_expires_at",
-        "description": "users.migrations.0007_alter_otp_expires_at",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0006_media_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(default=datetime.datetime(2024, 11, 7, 11, 59, 14, 472854, tzinfo=datetime.timezone.utc)),\n        ),",
-        "detail": "users.migrations.0007_alter_otp_expires_at",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0008_alter_otp_expires_at_likedblogs",
-        "description": "users.migrations.0008_alter_otp_expires_at_likedblogs",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0007_alter_otp_expires_at'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='otp',\n            name='expires_At',\n            field=models.DateTimeField(),\n        ),",
-        "detail": "users.migrations.0008_alter_otp_expires_at_likedblogs",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0009_blogpost_summary_user_designation_user_image_and_more",
-        "description": "users.migrations.0009_blogpost_summary_user_designation_user_image_and_more",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0008_alter_otp_expires_at_likedblogs'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='blogpost',\n            name='summary',\n            field=models.CharField(default='no summary', max_length=250),\n        ),",
-        "detail": "users.migrations.0009_blogpost_summary_user_designation_user_image_and_more",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0010_blogpost_thumbnail",
-        "description": "users.migrations.0010_blogpost_thumbnail",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0009_blogpost_summary_user_designation_user_image_and_more'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='blogpost',\n            name='thumbnail',\n            field=models.TextField(default='media/scotland_UqE7rEB.jpg'),\n        ),",
-        "detail": "users.migrations.0010_blogpost_thumbnail",
-        "documentation": {}
-    },
-    {
-        "label": "Migration",
-        "kind": 6,
-        "importPath": "users.migrations.0011_alter_blogpost_thumbnail",
-        "description": "users.migrations.0011_alter_blogpost_thumbnail",
-        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0010_blogpost_thumbnail'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='blogpost',\n            name='thumbnail',\n            field=models.TextField(),\n        ),",
-        "detail": "users.migrations.0011_alter_blogpost_thumbnail",
+        "importPath": "users.migrations.0003_alter_blogpost_is_archived",
+        "description": "users.migrations.0003_alter_blogpost_is_archived",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('users', '0002_blogpost_is_archived_and_more'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='blogpost',\n            name='is_archived',\n            field=models.BooleanField(default=False),\n        ),",
+        "detail": "users.migrations.0003_alter_blogpost_is_archived",
         "documentation": {}
     },
     {
@@ -1195,7 +978,7 @@
         "kind": 6,
         "importPath": "users.serializers",
         "description": "users.serializers",
-        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    author = UserSerializer(read_only=True)\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'likes_count', 'summary','author', 'thumbnail']\n        read_only_fields = ['author']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):",
+        "peekOfCode": "class BlogPostSerializer(serializers.ModelSerializer):\n    likes_count = serializers.SerializerMethodField()    # Add this field to include the number of likes\n    author = UserSerializer(read_only=True)\n    class Meta:\n        model = BlogPost\n        fields = ['id', 'title', 'content', 'created_at', 'updated_at',  'is_deleted', 'likes_count', 'summary','author', 'thumbnail', 'is_archived']\n        read_only_fields = ['author']\n    def get_likes_count(self, obj):\n        return LikedBlogs.objects.filter(blogpost=obj).count()\n    def create(self, validated_data):",
         "detail": "users.serializers",
         "documentation": {}
     },

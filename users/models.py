@@ -44,7 +44,7 @@ class BlogPost(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True)
     objects = BlogPostManager()
     thumbnail = models.TextField()
-    
+    is_archived = models.BooleanField(default=False)
     def soft_delete(self):
         self.is_deleted = True
         self.deleted_at = timezone.now()
@@ -52,7 +52,11 @@ class BlogPost(models.Model):
     
     def hard_delete(self):
         super(BlogPost, self).delete()     
- 
+    class Meta:
+        indexes = [
+            models.Index(fields=['title']),
+        ]   
+        
 class Media(models.Model):
     image = models.ImageField(upload_to='media/')
     created_at = models.DateTimeField(auto_now_add=True)

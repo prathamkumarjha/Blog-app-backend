@@ -70,6 +70,7 @@ class LoginView(APIView):
         })
 
 
+# class ArchiveView()
 
 
 class BlogPostListView(generics.ListCreateAPIView):
