@@ -1085,7 +1085,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class BlogPostByTitleView(APIView):\n    def get(self, request):\n        title = request.data.get('title')\n        if not title:\n            return Response({\"error\": \"Title is required.\"}, status=status.HTTP_400_BAD_REQUEST)\n        try:\n            blog_post = BlogPost.objects.get(title=title)\n        except BlogPost.DoesNotExist:\n            return Response({\"error\": \"Blog post not found.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = BlogPostSerializer(blog_post)",
+        "peekOfCode": "class BlogPostByTitleView(APIView):\n    def get(self, request, title):\n        # title = request.query_params.get('title')\n        if not title:\n            return Response({\"error\": \"Title is required.\"}, status=status.HTTP_400_BAD_REQUEST)\n        blog_posts = BlogPost.objects.filter(title__icontains=title, is_archived=False)\n        if not blog_posts.exists():\n            return Response({\"error\": \"Blog post not found.\"}, status=status.HTTP_404_NOT_FOUND)\n        serializer = BlogPostSerializer(blog_posts, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)",
         "detail": "users.views",
         "documentation": {}
     },

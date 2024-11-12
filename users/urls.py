@@ -26,7 +26,7 @@ urlpatterns = [
     path('web/myposts',MyPostsView.as_view(), name='my-post-list'), #list all the user posts
     path('web/posts/<int:pk>/', BlogPostDetailView.as_view(), name='post-detail'), #get the specific post  and also can update the new post if the user is authenticated
     path('web/posts/reactions',LikeBlogsView.as_view(), name='liked-posts'),   #Like and dislike a post
-    path('web/posts/title/', BlogPostByTitleView.as_view(), name='blogpost-by-title'), #for getting blog post according to its title will be used in search bar 
+    path('web/posts/title/<str:title>/', BlogPostByTitleView.as_view(), name='blogpost-by-title'), #for getting blog post according to its title will be used in search bar 
     #Admin Posts
     #Auth
     path('cms/auth/login/', LoginView.as_view()),

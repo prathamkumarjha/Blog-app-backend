@@ -126,18 +126,19 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class BlogPostByTitleView(APIView):
-    def get(self, request):
-        title = request.data.get('title')
-        
+    def get(self, request, title):
+        # title = request.query_params.get('title')
         if not title:
             return Response({"error": "Title is required."}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            blog_post = BlogPost.objects.get(title=title)
-        except BlogPost.DoesNotExist:
-            return Response({"error": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = BlogPostSerializer(blog_post)
-        return Response(serializer.data, status=status.HTTP_200_OK)
         
+        
+        blog_posts = BlogPost.objects.filter(title__icontains=title, is_archived=False)
+        if not blog_posts.exists():
+            return Response({"error": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = BlogPostSerializer(blog_posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
