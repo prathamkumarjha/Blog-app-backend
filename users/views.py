@@ -97,9 +97,16 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
 
     def get_object(self):
-        obj = super().get_object()
         # Restrict edit permissions to only the author
+        if self.request.method == 'DELETE':
+            obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts
+        else:
+            obj = super().get_object()  # Use the default queryset filtering for non-deleted posts
         
+        if not obj:
+            raise PermissionDenied("Blog post not found.")
+
+
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             if obj.author != self.request.user and self.request.user.designation != "Super Admin" :
                 raise permissions.PermissionDenied("You do not have permission to edit this blog post.")
@@ -111,7 +118,7 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Response({'message':'Post Updated'})
   
     def perform_destroy(self, instance):
-        if instance.author != self.request.user:
+        if instance.author != self.request.user and self.request.user.designation != "Super Admin":
             raise PermissionDenied("You do not have permission to delete this post.")
             
         if instance.is_deleted:
