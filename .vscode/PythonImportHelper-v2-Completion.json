@@ -1152,7 +1152,7 @@
         "kind": 6,
         "importPath": "users.views",
         "description": "users.views",
-        "peekOfCode": "class ChangePassword(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def post(self, request, id):\n        if request.user.id != id:\n            return Response({\"error\": \"You are not authorized to change this password.\"}, status=status.HTTP_403_FORBIDDEN)\n        password = request.data.get('password')\n        new_password = request.data.get('newPassword')\n        print(new_password)\n        if not request.user.check_password(password):",
+        "peekOfCode": "class ChangePassword(APIView):\n    permission_classes = [IsAuthenticated]\n    authentication_classes = [JWTAuthentication]\n    def post(self, request, id):\n        if request.user.id != id:\n            return Response({\"error\": \"You are not authorized to change this password.\"}, status=status.HTTP_403_FORBIDDEN)\n        password = request.data.get('currentPassword')\n        new_password = request.data.get('newPassword')\n        print(new_password)\n        if not request.user.check_password(password):",
         "detail": "users.views",
         "documentation": {}
     },

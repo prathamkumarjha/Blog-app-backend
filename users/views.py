@@ -190,7 +190,7 @@ class ChangePassword(APIView):
         if request.user.id != id:
             return Response({"error": "You are not authorized to change this password."}, status=status.HTTP_403_FORBIDDEN)
         
-        password = request.data.get('password')
+        password = request.data.get('currentPassword')
         new_password = request.data.get('newPassword')
         print(new_password)
         if not request.user.check_password(password):
