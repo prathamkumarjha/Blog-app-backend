@@ -828,7 +828,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'",
+        "peekOfCode": "EMAIL_PORT = 587\nEMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -837,7 +837,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "EMAIL_USE_TLS = True\nEMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -846,7 +846,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')\nEMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -855,7 +855,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')\nBASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -864,7 +864,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "BASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "BASE_URL = 'https://blog-app-backend-jbko.onrender.com' \nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -873,7 +873,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -882,7 +882,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\nCORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
@@ -891,7 +891,7 @@
         "kind": 5,
         "importPath": "auth.settings",
         "description": "auth.settings",
-        "peekOfCode": "CORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app'\n]",
+        "peekOfCode": "CORS_ALLOWED_ORIGINS = [\n    'http://localhost:3000',  # Correct\n    'https://blog-admin-panel-01.netlify.app',\n    'https://blog2-rho-dun.vercel.app/'\n]",
         "detail": "auth.settings",
         "documentation": {}
     },
