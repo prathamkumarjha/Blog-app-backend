@@ -84,7 +84,7 @@ class BlogPostListView(generics.ListCreateAPIView):
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()] 
     def get_queryset(self):
-        return BlogPost.objects.annotate().filter(is_deleted=False).select_related('author').order_by('-created_at')
+        return BlogPost.objects.annotate().filter(is_deleted=False, is_archived=False).select_related('author').order_by('-created_at')
         
     def perform_create(self, serializer):
         serializer.save()
