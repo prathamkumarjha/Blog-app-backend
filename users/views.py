@@ -112,6 +112,58 @@ class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
         
         return obj
 
+
+class BlogPostAuthDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')
+    serializer_class = BlogPostSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit
+
+    def get_object(self):
+        # Retrieve the object, allowing access to soft-deleted items for PATCH and DELETE requests
+        if self.request.method in ['DELETE', 'PATCH']:
+            obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts
+        else:
+            obj = super().get_object()  # Use the default queryset filtering for non-deleted posts
+        
+        # If the object is not found, raise a NotFound error
+        if not obj:
+            raise NotFound("Blog post not found.")
+
+
+        # Restrict read access for GET requests to the author
+        if self.request.method == 'GET':
+            if obj.author != self.request.user and self.request.user.designation != "Super Admin":
+                raise PermissionDenied("You do not have permission to view this blog post.")
+
+        # Restrict edit and delete permissions to the author or Super Admin
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            if obj.author != self.request.user and self.request.user.designation != "Super Admin":
+                raise PermissionDenied("You do not have permission to edit or delete this blog post.")
+        
+        return obj
+
+    def perform_update(self, serializer):
+        # Allow only the author to update the post
+        serializer.save(author=self.request.user)
+
+    def perform_destroy(self, instance):
+        if instance.author != self.request.user and self.request.user.designation != "Super Admin":
+            raise PermissionDenied("You do not have permission to delete this post.")
+        
+        # Handle soft delete or permanent delete
+        if instance.is_deleted:
+            instance.delete()
+            return Response({'message': 'Post deleted permanently'})
+        else:
+            instance.is_deleted = True
+            instance.deleted_at = timezone.now()
+            instance.save()
+            return Response({'message': 'Post moved to trash'})
+
+
+
+
+
     def perform_update(self, serializer):
         # Allow only the author to update the post
         serializer.save(author=self.request.user)

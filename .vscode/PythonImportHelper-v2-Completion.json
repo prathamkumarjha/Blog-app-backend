@@ -1121,6 +1121,15 @@
         "documentation": {}
     },
     {
+        "label": "BlogPostAuthDetailView",
+        "kind": 6,
+        "importPath": "users.views",
+        "description": "users.views",
+        "peekOfCode": "class BlogPostAuthDetailView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = BlogPost.objects.filter(is_deleted=False).select_related('author').order_by('-created_at')\n    serializer_class = BlogPostSerializer\n    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  # Anyone can read, authenticated users can edit\n    def get_object(self):\n        # Retrieve the object, allowing access to soft-deleted items for PATCH and DELETE requests\n        if self.request.method in ['DELETE', 'PATCH']:\n            obj = BlogPost.objects.filter(id=self.kwargs['pk']).first()  # Retrieve even soft-deleted posts\n        else:\n            obj = super().get_object()  # Use the default queryset filtering for non-deleted posts",
+        "detail": "users.views",
+        "documentation": {}
+    },
+    {
         "label": "BlogPostSearchView",
         "kind": 6,
         "importPath": "users.views",

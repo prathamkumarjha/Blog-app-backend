@@ -1,12 +1,9 @@
 from django.urls import path
 from auth.settings import MEDIA_ROOT
 from .views import IncreaseClapsView, LoginView, RegisterView, UserView
-from .views import BlogPostListView, BlogPostDetailView, ActivateAccount, ChangePassword, ForgotPasswordView, OTPVerificationView, PasswordResetView, MediaUploadView, MyPostsView, BlogPostSearchView, IncreaseClapsView
+from .views import BlogPostListView, BlogPostDetailView, ActivateAccount, ChangePassword, ForgotPasswordView, OTPVerificationView, PasswordResetView, MediaUploadView, MyPostsView, BlogPostSearchView, IncreaseClapsView, BlogPostAuthDetailView
 from rest_framework_simplejwt.views import TokenRefreshView
-# from rest_framework_simplejwt.views import (
-#     TokenObtainPairView,
-#     TokenRefreshView,
-# )
+
 
 urlpatterns = [
     #Web APP  
@@ -35,7 +32,7 @@ urlpatterns = [
     
     #Posts
     path('cms/posts/', BlogPostListView.as_view(), name='web-post-list_cms'),
-    path('cms/posts/<int:pk>/', BlogPostDetailView.as_view(), name='post-detail'), #get the specific post  and also can update the new post if the user is authenticated
+    path('cms/posts/<int:pk>/', BlogPostAuthDetailView.as_view(), name='post-detail'), #get the specific post  and also can update the new post if the user is authenticated
 
     
     #Users
